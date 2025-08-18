@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotelAppLibrary.Models
 {
-    public class GuestsModel
+    public class GuestModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
