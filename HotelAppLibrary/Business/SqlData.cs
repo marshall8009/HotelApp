@@ -18,6 +18,14 @@ namespace HotelAppLibrary.Business
             _db = db;
         }
 
+        public List<BookingModel> SearchBookings(string lastName)
+        {
+            return _db.LoadData<BookingModel, dynamic>("dbo.spBookings_SearchBookings",
+                                                       new { lastName, startDate = DateTime.Now.Date },
+                                                       connectionStringName,
+                                                       true);
+        }
+
         public List<RoomTypeModel> GetAvailableRoomTypes(DateTime startDate, DateTime endDate)
         {
             return _db.LoadData<RoomTypeModel, dynamic>("dbo.spRoomTypes_GetAvailableTypes",
