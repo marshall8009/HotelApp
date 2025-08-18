@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HotelAppLibrary.Business
 {
-    public class SqlData
+    public class SqlData : IDatabaseData
     {
         private readonly ISqlDataAccess _db;
         private const string connectionStringName = "SqlDb";
@@ -16,6 +16,14 @@ namespace HotelAppLibrary.Business
         public SqlData(ISqlDataAccess db)
         {
             _db = db;
+        }
+
+        public void CheckInGuest(int id)
+        {
+            _db.SaveData("dbo.spBookings_CheckInGuest",
+                         new { id },
+                         connectionStringName,
+                         true);
         }
 
         public List<BookingModel> SearchBookings(string lastName)
@@ -45,13 +53,13 @@ namespace HotelAppLibrary.Business
             var availableRooms = GetAvailableRoomsByRoomType(roomTypeId);
 
             _db.SaveData("dbo.spBookings_Insert",
-                                        new 
-                                        { 
-                                                roomId = availableRooms.First().Id, 
-                                                guest.Id, 
-                                                startDate, 
-                                                endDate,
-                                                totalPrice = test * roomType.Price
+                                        new
+                                        {
+                                            roomId = availableRooms.First().Id,
+                                            guest.Id,
+                                            startDate,
+                                            endDate,
+                                            totalPrice = test * roomType.Price
                                         },
                                         connectionStringName,
                                         true);
