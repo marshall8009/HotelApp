@@ -6,8 +6,8 @@ BEGIN
 	SET NOCOUNT ON
 
 	SELECT rt.Id, rt.Title, rt.Description, rt.Price
-	FROM Rooms r
-	INNER JOIN RoomTypes rt ON rt.Id = r.RoomTypeId
+	FROM dbo.Rooms r
+	INNER JOIN dbo.RoomTypes rt ON rt.Id = r.RoomTypeId
 	WHERE r.IsBooked = 0
 	-- going to try above where clause first as this seems more convoluted than a simple bool
 	--WHERE r.Id not in (
