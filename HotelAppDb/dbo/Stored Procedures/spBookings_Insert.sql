@@ -10,6 +10,4 @@ BEGIN
 
 	INSERT INTO dbo.Bookings (RoomId, GuestId, StartDate, EndDate, TotalPrice)
 	VALUES(@roomId, @guestId, @startDate, @endDate, @totalPrice)
-
-	UPDATE dbo.Rooms Set IsBooked = 1 WHERE Id = @roomId 
 END

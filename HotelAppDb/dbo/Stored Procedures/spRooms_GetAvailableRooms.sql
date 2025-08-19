@@ -8,5 +8,4 @@ BEGIN
 	FROM dbo.Rooms r
 	INNER JOIN dbo.RoomTypes rt ON rt.Id = r.RoomTypeId
 	WHERE r.RoomTypeId = @roomType
-	AND r.IsBooked = 0
 END
