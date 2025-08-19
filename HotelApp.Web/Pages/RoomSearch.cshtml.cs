@@ -1,0 +1,46 @@
+using HotelAppLibrary.Business;
+using HotelAppLibrary.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
+
+namespace HotelApp.Web.Pages
+{
+    public class RoomSearchModel : PageModel
+    {
+        private readonly IDatabaseData _db;
+
+        [DataType(DataType.Date)]
+        [BindProperty(SupportsGet = true)]
+        public DateTime StartDate { get; set; } = DateTime.Now;
+
+        [DataType(DataType.Date)]
+        [BindProperty(SupportsGet = true)]
+        public DateTime EndDate { get; set; } = DateTime.Now.AddDays(1);
+
+        [BindProperty(SupportsGet = true)]
+        public bool SearchEnabled { get; set; }
+
+        public List<RoomTypeModel> AvailableRoomTypes { get; set; }
+
+        public RoomSearchModel(IDatabaseData db)
+        {
+            _db = db;
+        }
+
+        public void OnGet()
+        {
+            if (SearchEnabled)
+            {
+                AvailableRoomTypes = _db.GetAvailableRoomTypes(StartDate, EndDate);
+            }
+        }
+
+        public IActionResult OnPost()
+        {
+
+            return RedirectToPage(new { SearchEnabled = true, StartDate, EndDate });
+        }
+    }
+}
