@@ -13,5 +13,5 @@ BEGIN
 
 	SELECT Id, FirstName, LastName
 	FROM Guests
-	WHERE Id = SCOPE_IDENTITY()
+	WHERE FirstName = @firstName AND LastName = @lastname
 END
