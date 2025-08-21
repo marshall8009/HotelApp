@@ -26,6 +26,14 @@ namespace HotelAppLibrary.Business
                          true);
         }
 
+        public RoomTypeModel GetRoomTypeById(int id)
+        {
+            return _db.LoadData<RoomTypeModel, dynamic>("dbo.spRoomTypes_GetById",
+                                                        new { id },
+                                                        connectionStringName,
+                                                        true).FirstOrDefault();
+        }
+
         public List<BookingModel> SearchBookings(string lastName)
         {
             return _db.LoadData<BookingModel, dynamic>("dbo.spBookings_SearchBookings",
@@ -56,7 +64,7 @@ namespace HotelAppLibrary.Business
                                         new
                                         {
                                             roomId = availableRooms.First().Id,
-                                            guest.Id,
+                                            guestId = guest.Id,
                                             startDate,
                                             endDate,
                                             totalPrice = test * roomType.Price
@@ -69,7 +77,7 @@ namespace HotelAppLibrary.Business
         private RoomTypeModel GetAvailableRoomTypes(int roomTypeId)
         {
             var roomType = _db.LoadData<RoomTypeModel, dynamic>("SELECT * FROM RoomTypes WHERE Id = @Id",
-                                                                new { roomTypeId },
+                                                                new { Id = roomTypeId },
                                                                 connectionStringName,
                                                                 false).First();
 
@@ -91,7 +99,7 @@ namespace HotelAppLibrary.Business
             var guest = _db.LoadData<GuestModel, dynamic>("dbo.spGuests_InsertGuest",
                                         new { firstName, lastName },
                                         connectionStringName,
-                                        true).First();
+                                        true).FirstOrDefault();
 
             return guest;
         }
